@@ -108,7 +108,7 @@ Parameters:
     MaxValue: 10240
 
   EC2InstanceType:
-    Default: t2.medium
+    Default: t3a.medium
     Description: The type of EC2 instance used by the auto scaling group
     Type: String
 
@@ -585,7 +585,7 @@ Resources:
       LaunchTemplateData:
         NetworkInterfaces:
           - DeviceIndex: 0
-            AssociatePublicIpAddress: true
+            AssociatePublicIpAddress: false
             Groups:
               - !Ref InstanceSecurityGroup
             DeleteOnTermination: true
