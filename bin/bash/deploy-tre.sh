@@ -12,7 +12,7 @@ usage() {
   exit 1; 
 }
 
-while getopts ":r:e:s:" opt
+while getopts ":r:e:i:s:" opt
 do
   case "$opt" in
     r)
@@ -20,6 +20,9 @@ do
     ;;
     e)
       OVERRIDE_SERVICE_CATALOG_ENDPOINT="ParameterKey=ServiceCatalogEndpoint,ParameterValue=$OPTARG"
+    ;;
+    i)
+      OVERRIDE_EC2_INSTANCE_TYPE="ParameterKey=EC2InstanceType,ParameterValue=$OPTARG"
     ;;
     s)
       [[ $OPTARG == "true" || $OPTARG == "false" ]] || usage
@@ -102,7 +105,7 @@ else
 fi
 
 # Set up parameter overrides for sam deploy, if any are needed
-SERVICE_CATALOG_PARAMETER_OVERRIDES="$OVERRIDE_SERVICE_CATALOG_ENDPOINT $OVERRIDE_SERVICE_CATALOG_VERIFY_SSL"
+SERVICE_CATALOG_PARAMETER_OVERRIDES="$OVERRIDE_SERVICE_CATALOG_ENDPOINT $OVERRIDE_EC2_INSTANCE_TYPE $OVERRIDE_SERVICE_CATALOG_VERIFY_SSL"
 if [[ $SERVICE_CATALOG_PARAMETER_OVERRIDES =~ [A-Za-z] ]]
 then
   SAM_DEPLOY_PARAMETER_OVERRIDES="--parameter-overrides $SERVICE_CATALOG_PARAMETER_OVERRIDES"
