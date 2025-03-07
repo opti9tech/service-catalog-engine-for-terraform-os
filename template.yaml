@@ -43,13 +43,13 @@ Parameters:
     Type: String
 
   TerraformCliVersion:
-    Default: 1.2.8
+    Default: 1.11.1
     Description: The Terraform CLI version to install on the EC2 instances
     Type: String
 
   ServerLatestAmiId:
     Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
-    Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
+    Default: '/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64'
 
   VpcCidr:
     Default: 10.0.0.0/16
@@ -600,6 +600,7 @@ Resources:
             !Sub |
             #!/bin/bash -xe
             yum update -y aws-cfn-bootstrap
+            dnf -y install python3-pip
             /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource TerraformAutoScalingLaunchTemplate --configsets setup --region ${AWS::Region}
             /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource TerraformAutoscalingGroup --region ${AWS::Region}
     Metadata:
