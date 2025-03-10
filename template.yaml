@@ -632,7 +632,6 @@ Resources:
         install_terraform_runner:
           packages:
             yum:
-              jq: [ ]
               git: [ ]
           commands:
             01_download_wheel:
