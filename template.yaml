@@ -613,9 +613,6 @@ Resources:
             - create_workspaces_parent_dir
 
         install_terraform:
-          packages:
-            yum:
-              yum-utils: [ ]
           commands:
             add_hashicorp_repo_to_yum:
               command:
